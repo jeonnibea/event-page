@@ -1,1 +1,277 @@
-# event-page
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.page { font-family: 'Noto Sans KR', sans-serif; background: #fffdf5; min-height: 100vh; color: #2c2c2a; }
+.hero {
+  background: #fff8d6;
+  text-align: center;
+  padding: 3rem 1.5rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 0.5px solid #e6c84a;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 25% 60%, #ffe57a 0%, transparent 55%),
+              radial-gradient(ellipse at 78% 30%, #ffd84d 0%, transparent 50%);
+  opacity: 0.45;
+}
+.hero-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  background: rgba(230,168,0,0.15);
+  border: 0.5px solid #e6a800;
+  border-radius: 20px;
+  padding: 4px 14px;
+  margin-bottom: 1.2rem;
+  color: #7a5c00;
+}
+.hero h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.02em;
+  color: #4a3800;
+}
+.hero h1 em {
+  font-style: normal;
+  color: #b8860b;
+}
+.hero-sub {
+  font-size: 0.9rem;
+  color: #8a7040;
+  margin-bottom: 2rem;
+}
+.info-row {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.info-chip {
+  background: #fff3b0;
+  border: 0.5px solid #e6c84a;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-size: 0.82rem;
+  color: #5a4400;
+}
+.info-chip strong {
+  display: block;
+  font-size: 0.7rem;
+  color: #b8860b;
+  margin-bottom: 2px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+.content { max-width: 560px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+.notice-box {
+  background: #fff;
+  border: 0.5px solid #e0dcc8;
+  border-left: 3px solid #e6a800;
+  border-radius: 0 10px 10px 0;
+  padding: 1.1rem 1.3rem;
+  margin-bottom: 2rem;
+  font-size: 0.88rem;
+  line-height: 1.9;
+  color: #444441;
+}
+.notice-title {
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: #b8860b;
+  margin-bottom: 0.5rem;
+}
+.form-card {
+  background: #fff;
+  border: 0.5px solid #e0dcc8;
+  border-radius: 14px;
+  padding: 1.8rem;
+}
+.form-section-title {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #888780;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 0.5px solid #ede9d8;
+}
+.field { margin-bottom: 1.2rem; }
+.field label {
+  display: block;
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: #444441;
+  margin-bottom: 0.4rem;
+}
+.field label span { color: #d85a30; margin-left: 2px; }
+.field input[type="text"],
+.field input[type="tel"] {
+  width: 100%;
+  border: 0.5px solid #c8c4b0;
+  border-radius: 8px;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.9rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #2c2c2a;
+  background: #fffdf5;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.field input:focus {
+  border-color: #e6a800;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(230,168,0,0.12);
+}
+.upload-area {
+  border: 1.5px dashed #c8c4b0;
+  border-radius: 10px;
+  padding: 1.8rem 1rem;
+  text-align: center;
+  background: #fffdf5;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.upload-area:hover { border-color: #e6a800; background: #fffae6; }
+.upload-icon { font-size: 26px; color: #b8a060; margin-bottom: 0.5rem; }
+.upload-text { font-size: 0.85rem; color: #5f5e5a; margin-bottom: 0.3rem; }
+.upload-hint { font-size: 0.75rem; color: #888780; }
+.upload-area input { display: none; }
+.preview-img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: none;
+  margin-top: 0.8rem;
+}
+.submit-btn {
+  width: 100%;
+  background: #e6a800;
+  color: #4a3800;
+  border: none;
+  border-radius: 10px;
+  padding: 0.9rem;
+  font-size: 0.95rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  letter-spacing: 0.03em;
+  transition: background 0.15s, transform 0.1s;
+}
+.submit-btn:hover { background: #f0b800; }
+.submit-btn:active { transform: scale(0.99); }
+.success-msg {
+  display: none;
+  text-align: center;
+  padding: 2rem;
+  background: #fffae6;
+  border: 0.5px solid #e6c84a;
+  border-radius: 12px;
+  margin-top: 1rem;
+}
+.success-msg h3 { font-size: 1rem; font-weight: 500; color: #7a5c00; margin-bottom: 0.3rem; }
+.success-msg p { font-size: 0.83rem; color: #a07800; }
+</style>
+
+<div class="page">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="badge">창립 40주년 기념</div>
+      <h1>서울시립발달장애인복지관<br><em>40주년 기념 이벤트</em></h1>
+      <p class="hero-sub">함께해 주신 모든 분들께 감사드립니다</p>
+      <div class="info-row">
+        <div class="info-chip">
+          <strong>접수 기간</strong>
+          2026. 7. 1 ~ 7. 30
+        </div>
+        <div class="info-chip">
+          <strong>결과 발표</strong>
+          2026. 8. 7
+        </div>
+        <div class="info-chip">
+          <strong>참여 대상</strong>
+          누구나
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="notice-box">
+      <div class="notice-title">이 벤 트 안 내</div>
+      서울시립발달장애인복지관이 어느덧 <strong>창립 40주년</strong>을 맞았습니다.<br>
+      복지관과 함께해 주신 분들의 이야기를 영상으로 전하고 있습니다.<br><br>
+      영상에 <strong>응원 댓글</strong>을 남기신 후 댓글 화면을 캡처하여 아래 양식으로 제출해 주세요.<br>
+      추첨을 통해 소정의 선물을 보내드리겠습니다. 🎁
+    </div>
+
+    <div class="form-card">
+      <div class="form-section-title">참여 정보 입력</div>
+
+      <div class="field">
+        <label>이름 <span>*</span></label>
+        <input type="text" id="name" placeholder="성함을 입력해 주세요" />
+      </div>
+
+      <div class="field">
+        <label>연락처 <span>*</span></label>
+        <input type="tel" id="phone" placeholder="010-0000-0000" />
+      </div>
+
+      <div class="field">
+        <label>댓글 캡처 사진 업로드 <span>*</span></label>
+        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+          <input type="file" id="fileInput" accept="image/jpeg,image/jpg,image/png" onchange="handleFile(this)" />
+          <div class="upload-icon"><i class="ti ti-photo-up" aria-hidden="true"></i></div>
+          <div class="upload-text">사진을 클릭하여 선택하세요</div>
+          <div class="upload-hint">JPEG / JPG / PNG · 최대 10MB</div>
+          <img id="preview" class="preview-img" alt="미리보기" />
+        </div>
+      </div>
+
+      <button class="submit-btn" onclick="handleSubmit()">이벤트 참여하기</button>
+
+      <div class="success-msg" id="successMsg">
+        <div style="font-size:2rem; margin-bottom:0.5rem">🎉</div>
+        <h3>참여가 완료되었습니다!</h3>
+        <p>추첨 결과는 8월 7일에 발표됩니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function handleFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById('preview');
+    img.src = e.target.result;
+    img.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+function handleSubmit() {
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const file = document.getElementById('fileInput').files[0];
+  if (!name || !phone || !file) {
+    alert('이름, 연락처, 캡처 사진을 모두 입력해 주세요.');
+    return;
+  }
+  document.getElementById('successMsg').style.display = 'block';
+  document.querySelector('.submit-btn').style.display = 'none';
+}
+</script>
